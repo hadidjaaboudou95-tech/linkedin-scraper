@@ -1,0 +1,24 @@
+name: LinkedIn Profile Scraper
+
+on:
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lancer le scraper sur Apify
+        env:
+          APIFY_TOKEN: ${{ secrets.APIFY_API_TOKEN }}
+        run: |
+          curl -X POST "https://api.apify.com/v2/acts/harvestapi~linkedin-profile-search/runs?token=$APIFY_TOKEN" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "queries": [
+              "Cabinet de recrutement France",
+              "Directeur Ressources Humaines DRH",
+              "Talent Acquisition Manager France",
+              "Responsable Formation Entreprise"
+            ],
+            "maxItems": 50
+          }'
